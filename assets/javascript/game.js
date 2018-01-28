@@ -10,6 +10,13 @@ var crystalFourVal;
 var playerScore = 0;
 var targetScore;
 
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+ }
+ 
+ var result = getRndInteger(19, 120);
+ console.log(result);
+
 //creates an enviroment for starting/re-starting the game
 play = function(){
 
