@@ -10,17 +10,19 @@ var crystalFourVal;
 var playerScore = 0;
 var targetScore;
 
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
- }
+
+
 //creates an enviroment for starting/re-starting the game
 function play (){
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
     playerScore = 0;
-    var targetScore = getRndInteger(19, 120);
-    var crystalOneVal = getRndInteger(1, 13);
-    var crystalTwoVal = getRndInteger(1, 13);
-    var crystalThreeVal = getRndInteger(1, 13);
-    var crystalFourVal = getRndInteger(1, 13);
+    targetScore = getRndInteger(19, 120);
+    crystalOneVal = getRndInteger(1, 13);
+    crystalTwoVal = getRndInteger(1, 13);
+    crystalThreeVal = getRndInteger(1, 13);
+    crystalFourVal = getRndInteger(1, 13);
     console.log("target", targetScore);
     console.log("crystal1:", crystalOneVal);
     console.log("crystal2:", crystalTwoVal);
@@ -30,59 +32,49 @@ function play (){
 
 play();
 
-//sets eventlisteners
-var c1 = $("#c1");
-var c2 = $("#c2");
-var c3 = $("#c3");
-var c4 = $("#c4");
-
-c1.click(addPts);
-    function addPts() {
-       $(crystalOneVal) += playerScore; 
-    }
-console.log("player score:", playerScore);
-$("#c1").click(){
-    $(crystalOneVal) += playerScore;
+$("#c1").click(function() {
+    playerScore += crystalOneVal;
     render();
-});
+})
 
-$("#c2").click(addPts) {
-    $(crystalTwoVal) += playerScore;
-    rendr();
-}
-
-$("#c3").click(function(){
-    $(crystalThreeVal) += playerScore;
+$("#c2").click(function() {
+    playerScore += parseInt(crystalTwoVal);
     render();
-});
+})
 
-$("#c4").click(function(){
-    $(crystalFourVal) += playerScore;
+$("#c3").click(function() {
+    playerScore += parseInt(crystalThreeVal);
     render();
-});
+})
+
+$("#c4").click(function() {
+    playerScore += parseInt(crystalFourVal);
+    render();
+})
+
+console.log(playerScore);
 
 //Displays to dom
 function render(){
-    var newP = $("#scoreBox");
-    winBox = $("<p>").text("Wins: " + wins);
-    winBox.append(newP);
-    $("#lossBox").html(losses);
-    $("#tagetScore").text(targetScore);
+    $("#winBox").text("Wins: " + wins);
+    $("#lossBox").text("Losses: " + losses);
+    $("#targetScore").text("Target Score: " + targetScore);
     $("#yourBox").text(" " + playerScore);
+//advances scoreboard for win/loss and resets the game.
+    if (playerScore === targetScore) {
+        wins++;
+        alert("You won!!!!")
+        play();
+    }
+    else if (playerScore > targetScore) {
+        losses++;
+        alert("You lost!!!!")
+        play();
+    }
 }
 render();
 
-//advances scoreboard for win/loss and resets the game.
-if (playerScore === targetScore) {
-    wins++;
-    render();
-    then.play();
-}
 
-if (playerScore > targetScore) {
-    losses++;
-    render();
-    then.play();
-}
+
 
 
